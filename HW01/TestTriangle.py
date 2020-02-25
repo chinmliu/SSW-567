@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# _*_ coding:utf-8 _*_
-
 import unittest
 
 
-def classify_triangle(a, b, c):
-    sides = [a, b, c]
+def classify_triangle(a_side, b_side, c_side):
+    """This function is used to judge the type of the triangle"""
+    sides = [a_side, b_side, c_side]
     for i in sides:
         try:
-            num = int(i)
+            int(i)
         except ValueError:
             flag = False
             return "Wrong input"
@@ -17,24 +15,27 @@ def classify_triangle(a, b, c):
 
     while flag:
         sides.sort()
-        a = sides[0]
-        b = sides[1]
-        c = sides[2]
+        a_side = sides[0]
+        b_side = sides[1]
+        c_side = sides[2]
 
-        if a + b <= c:
+        if a_side <= 0 or b_side <= 0 or c_side <= 0 or a_side + b_side <= c_side:
             return "Not a triangle"
-        elif a == b and b != c:
+        if a_side == b_side and b_side != c_side:
             return "Isosceles"
-        elif a == b == c:
+        if a_side == b_side == c_side:
             return "Equilateral"
-        elif a != b and a != c and a * a + b * b == c * c:
+        if a_side != b_side and a_side != c_side \
+                and a_side * a_side + b_side * b_side == c_side * c_side:
             return "Right"
-        else:
-            return "Scalene"
+        return "Scalene"
 
 
 class TestTriangles(unittest.TestCase):
-    def testSet(self):
+    """This is the unittest class"""
+
+    def test_set(self):
+        """This is the test cases of the unittest"""
         self.assertEqual(classify_triangle(3, 4, 5), "Right")
         self.assertEqual(classify_triangle(1, 2, 1), "Not a triangle")
         self.assertEqual(classify_triangle(1, 3, 1), "Not a triangle")
@@ -42,6 +43,7 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classify_triangle(4, 5, 6), "Scalene")
         self.assertEqual(classify_triangle(4, 4, 7), "Isosceles")
         self.assertEqual(classify_triangle(3, "y", 5), "Wrong input")
+        self.assertEqual(classify_triangle(-3, -4, -5), 'Not a triangle')
 
 
 if __name__ == '__main__':
